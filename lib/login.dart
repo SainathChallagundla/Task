@@ -10,18 +10,20 @@ class UserLogin extends StatefulWidget {
 
 class _UserLoginState extends State<UserLogin> {
   String? email, password;
+  String? _email, _password;
+  late bool newuser;
+
   @override
   void initState() {
     super.initState();
     this.loggedin_check();
-   getinit();
+    getinit();
   }
 
   loggedin_check() async {
-    String? _email = await getEmail();
-    String? _password = await getPassword();
-    print("=========================================$_email");
-    if (_email != null && _password != null) {
+    newuser = await getbool() ?? true;
+
+    if (newuser == false) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
     }
@@ -52,8 +54,9 @@ class _UserLoginState extends State<UserLogin> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
+              padding: EdgeInsets.all(15.0),
+              child: TextFormField(
+                controller: _emailcontroller,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -61,10 +64,9 @@ class _UserLoginState extends State<UserLogin> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, top: 15, bottom: 0),
-              //padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
+              padding: const EdgeInsets.all(15.0),
+              child: TextFormField(
+                controller: _passwordcontroller,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -79,15 +81,18 @@ class _UserLoginState extends State<UserLogin> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () {
-                  if (_emailcontroller == email &&
-                      _passwordcontroller == password) {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => HomePage()));
-                  } else if (_emailcontroller != email &&
-                      _passwordcontroller != password) {
-                    showAlertDialog(context);
-                  }
+                onPressed: () async{
+                  _email = _emailcontroller.text;
+                  _password = _passwordcontroller.text;
+                  print("--------------------------------------$email");
+                  print("--------------------------------------$_email");
+                  print("--------------------------------------$password");
+                  print("--------------------------------------$_password");
+
+                  _email == email && _password == password
+                      ? Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext) => HomePage()))
+                      : showAlertDialog(context);
                 },
                 child: Text(
                   'Login',
@@ -104,7 +109,7 @@ class _UserLoginState extends State<UserLogin> {
               child: TextButton(
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => SignUpPage()));
+                      context, MaterialPageRoute(builder: (BuildContext) => SignUpPage()));
                 },
                 child: Text(
                   'Signup',
@@ -119,22 +124,21 @@ class _UserLoginState extends State<UserLogin> {
   }
 
   showAlertDialog(BuildContext context) {
-    // set up the button
     Widget okButton = TextButton(
       child: Text("OK"),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
+      title: Text("Invalid Credentials"),
+      content: Text("Please Enter Valid Email or Password"),
       actions: [
         okButton,
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
