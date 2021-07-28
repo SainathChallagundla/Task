@@ -95,7 +95,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Task")),
+      appBar: AppBar(centerTitle: true,
+        title: Text("Task")),
       body: Image.asset("assets/images/task.png"),
       drawer: _drawer(context),
     );
@@ -116,7 +117,6 @@ class _HomePageState extends State<HomePage> {
                     child: Center(
                         child: Text("Task",
                             style: TextStyle(
-                                color: Colors.grey,
                                 fontFamily: 'Logofont',
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20)))),

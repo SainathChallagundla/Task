@@ -42,7 +42,7 @@ class _UserLoginState extends State<UserLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+      appBar: AppBar(centerTitle: true,
         title: Text("Login Page"),
       ),
       body: Center(

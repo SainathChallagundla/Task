@@ -19,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sign Up")),
+      appBar: AppBar(centerTitle: true, title: Text("Sign Up")),
       body: Center(
           child: Form(
               key: _formkey,
@@ -60,6 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Padding(
                     padding: EdgeInsets.all(10),
                     child: TextFormField(
+                      keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Phone Number',
