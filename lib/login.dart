@@ -40,9 +40,6 @@ class _UserLoginState extends State<UserLogin> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailcontroller = new TextEditingController();
-    TextEditingController _passwordcontroller = new TextEditingController();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -56,22 +53,30 @@ class _UserLoginState extends State<UserLogin> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: TextFormField(
-                controller: _emailcontroller,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter Email'),
+                onChanged: (value) {
+                  setState(() {
+                    _email = value;
+                  });
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextFormField(
-                controller: _passwordcontroller,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                     hintText: 'Enter secure password'),
+                onChanged: (value) {
+                  setState(() {
+                    _password = value;
+                  });
+                },
               ),
             ),
             SizedBox(height: 20),
@@ -81,18 +86,8 @@ class _UserLoginState extends State<UserLogin> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
-                onPressed: () async{
-                  _email = _emailcontroller.text;
-                  _password = _passwordcontroller.text;
-                  print("--------------------------------------$email");
-                  print("--------------------------------------$_email");
-                  print("--------------------------------------$password");
-                  print("--------------------------------------$_password");
-
-                  _email == email && _password == password
-                      ? Navigator.push(context,
-                          MaterialPageRoute(builder: (BuildContext) => HomePage()))
-                      : showAlertDialog(context);
+                onPressed: () {
+                  onSubmit();
                 },
                 child: Text(
                   'Login',
@@ -108,8 +103,10 @@ class _UserLoginState extends State<UserLogin> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (BuildContext) => SignUpPage()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext) => SignUpPage()));
                 },
                 child: Text(
                   'Signup',
@@ -121,6 +118,19 @@ class _UserLoginState extends State<UserLogin> {
         ),
       ),
     );
+  }
+
+  void onSubmit() {
+    if (email != _email && password != _password) {
+      print("--------------------------------------$email");
+      print("--------------------------------------$_email");
+      print("--------------------------------------$password");
+      print("--------------------------------------$_password");
+      showAlertDialog(context);
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (BuildContext) => HomePage()));
+    }
   }
 
   showAlertDialog(BuildContext context) {

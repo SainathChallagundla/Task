@@ -1,33 +1,173 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'login.dart';
+import 'package:task/drawerMenu/Hoblist.dart';
+import 'package:task/drawerMenu/contact.dart';
+import 'package:task/login.dart';
+import 'package:task/main.dart';
+import 'LocalStore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  String? email, name;
+  int _counter = 0;
+
   @override
   void initState() {
     super.initState();
+    getinit();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channel.description,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title.toString()),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body.toString())],
+                  ),
+                ),
+              );
+            });
+      }
+    });
+  }
+
+
+
+  getinit() async {
+    String? _email = await getEmail();
+    String? _name = await getName();
+    setState(() {
+      email = _email;
+      name = _name;
+    });
+  }
+  void showNotification() {
+    setState(() {
+      _counter++;
+    });
+    flutterLocalNotificationsPlugin.show(
+        0,
+        "Testing $_counter",
+        "How you doin ?",
+        NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name, channel.description,
+                importance: Importance.high,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher')));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Task")),
-        body: Center(
-          child: Text("HomePage"),
-        ),
-        floatingActionButton: FloatingActionButton(onPressed: () async {
-          late SharedPreferences prefs;
-          prefs = await SharedPreferences.getInstance();
-          prefs.remove("email");
-          prefs.remove("password");
-        Navigator.push(
-            context, MaterialPageRoute(builder: (BuildContext) => UserLogin()));
-        }));
+      appBar: AppBar(title: Text("Task")),
+      body: Image.asset("assets/images/task.png"),
+      drawer: _drawer(context),
+    );
+  }
+
+  Widget _drawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              verticalDirection: VerticalDirection.down,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    child: Center(
+                        child: Text("Task",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: 'Logofont',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)))),
+                SizedBox(height: 5),
+                Text('Hello $name'),
+                SizedBox(height: 5),
+                Text('Email: $email'),
+                SizedBox(height: 5),
+              ],
+            ), 
+          ),
+          ListTile(
+            title: Text('Company Info'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ContactPage()));
+            },
+          ),
+          ListTile(
+            title: Text('Hoblist'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => HoblistPage()));
+            },
+          ),
+
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => UserLogin()));
+              },
+              child: Text("LogOut")),
+
+          TextButton(
+              onPressed: () {
+                removeDetals();
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => UserLogin()));
+              },
+              child: Text("Delete Account")),
+        ],
+      ),
+    );
   }
 }

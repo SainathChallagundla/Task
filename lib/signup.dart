@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task/login.dart';
 import 'LocalStore.dart';
 
@@ -23,40 +22,67 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(title: Text("Sign Up")),
       body: Center(
           child: Form(
-        key: _formkey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                    hintText: 'Enter email'),
-                controller: _emailcontroller,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter Password'),
-                controller: _passwordcontroller,
-              ),
-            ),
-          ],
-        ),
-      )),
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-       await setEmail(_emailcontroller.text);
-       await setPassword(_passwordcontroller.text);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (BuildContext) => UserLogin()));
-      }),
+              key: _formkey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Name',
+                          hintText: 'Enter Name'),
+                      controller: _namecontroller,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Email',
+                          hintText: 'Enter Email'),
+                      controller: _emailcontroller,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                          hintText: 'Enter Password'),
+                      controller: _passwordcontroller,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Phone Number',
+                          hintText: 'Enter Phone Num'),
+                      controller: _phoneNocontroller,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () async {
+                      await setName(_namecontroller.text);
+                      await setEmail(_emailcontroller.text);
+                      await setPassword(_passwordcontroller.text);
+                      await setPhoneNo(_phoneNocontroller.text);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext) => UserLogin()));
+                    },
+                    child: Text("Submit"),
+                  )
+                ],
+              ))),
     );
   }
 }

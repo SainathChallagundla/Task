@@ -1,5 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+setName(String name) async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  prefs.setString("name", name);
+}
+
 setEmail(String email) async {
   late SharedPreferences prefs;
   prefs = await SharedPreferences.getInstance();
@@ -12,30 +18,53 @@ setPassword(String password) async {
   prefs.setString("password", password);
 }
 
+setPhoneNo(String phoneNo) async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  prefs.setString("phoneNo", phoneNo);
+}
+
 setbool(String password) async {
   late SharedPreferences prefs;
   prefs = await SharedPreferences.getInstance();
   prefs.setBool("login", false);
 }
 
+getName() async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  return prefs.getString("name");
+}
+
 getEmail() async {
   late SharedPreferences prefs;
   prefs = await SharedPreferences.getInstance();
-  print(
-      "+++++++++++++++++++++++++++++++++++++++++++++++++=${prefs.getString("email")}");
   return prefs.getString("email");
 }
 
 getPassword() async {
   late SharedPreferences prefs;
   prefs = await SharedPreferences.getInstance();
-  print(
-      "+++++++++++++++++++++++++++++++++++++++++++++++++==${prefs.getString("password")}");
   return prefs.getString("password");
 }
 
-getbool()async{
+getPhoneNo() async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  return prefs.getString("phoneNo");
+}
+
+getbool() async {
   late SharedPreferences prefs;
   prefs = await SharedPreferences.getInstance();
   return prefs.getBool("login");
+}
+
+removeDetals() async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  prefs.remove("name");
+  prefs.remove("email");
+  prefs.remove("password");
+  prefs.remove("phoneNo");
 }
