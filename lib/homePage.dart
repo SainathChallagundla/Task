@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:task/common.dart';
 import 'package:task/drawerMenu/Hoblist.dart';
 import 'package:task/drawerMenu/contact.dart';
 import 'package:task/login.dart';
@@ -66,8 +67,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
-
   getinit() async {
     String? _email = await getEmail();
     String? _name = await getName();
@@ -76,6 +75,7 @@ class _HomePageState extends State<HomePage> {
       name = _name;
     });
   }
+
   void showNotification() {
     setState(() {
       _counter++;
@@ -85,7 +85,8 @@ class _HomePageState extends State<HomePage> {
         "Testing $_counter",
         "How you doin ?",
         NotificationDetails(
-            android: AndroidNotificationDetails(channel.id, channel.name, channel.description,
+            android: AndroidNotificationDetails(
+                channel.id, channel.name, channel.description,
                 importance: Importance.high,
                 color: Colors.blue,
                 playSound: true,
@@ -95,8 +96,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true,
-        title: Text("Task")),
+      appBar: setAppBar("Task", context),
       body: Image.asset("assets/images/task.png"),
       drawer: _drawer(context),
     );
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 Text('Email: $email'),
                 SizedBox(height: 5),
               ],
-            ), 
+            ),
           ),
           ListTile(
             title: Text('Company Info'),
@@ -144,18 +144,18 @@ class _HomePageState extends State<HomePage> {
                   builder: (BuildContext context) => HoblistPage()));
             },
           ),
-
           TextButton(
               onPressed: () {
                 Navigator.pop(context);
-
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) => UserLogin()));
               },
-              child: Text("LogOut")),
-
+              child: Text(
+                "LogOut",
+              )),
+          SizedBox(height: 20),
           TextButton(
               onPressed: () {
                 removeDetals();

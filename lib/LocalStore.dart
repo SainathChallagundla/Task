@@ -23,6 +23,11 @@ setPhoneNo(String phoneNo) async {
   prefs = await SharedPreferences.getInstance();
   prefs.setString("phoneNo", phoneNo);
 }
+setProfession(String phoneNo) async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  prefs.setString("profession", phoneNo);
+}
 
 setbool(String password) async {
   late SharedPreferences prefs;
@@ -52,6 +57,11 @@ getPhoneNo() async {
   late SharedPreferences prefs;
   prefs = await SharedPreferences.getInstance();
   return prefs.getString("phoneNo");
+}
+getProfession() async {
+  late SharedPreferences prefs;
+  prefs = await SharedPreferences.getInstance();
+  return prefs.getString("profession");
 }
 
 getbool() async {
