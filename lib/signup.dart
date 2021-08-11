@@ -99,14 +99,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: TextButton(
                         onPressed: () async {
                           if (profession==null) {
-                            showAlertDialog(context, "profesion empty", "please select a profession");
+                            showAlertDialog(context, "Profession empty", "please select a profession");
                           }
                           if (_formkey.currentState!.validate()&&(profession!=null)) {
                             await setName(_namecontroller.text);
                             await setEmail(_emailcontroller.text);
                             await setPassword(_passwordcontroller.text);
                             await setPhoneNo(_phoneNocontroller.text);
-
+                            await setProfession(profession!);
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

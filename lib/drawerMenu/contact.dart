@@ -15,6 +15,6 @@ class _ContactPageState extends State<ContactPage> {
         appBar: setAppBar("Company Info", context),
         body: Center(
             child: Text(
-                'Company: Geeksynergy Technologies Pvt Ltd\nAddress:  Sanjayanagar, Bengaluru-56\nPhone:XXXXXXXXX09\nEmail: XXXXXX@gmail.com\n')));
+                'Company: Flutter XXXXXXXXXXXX\nAddress:  XXXXXXXXXXX, XXXXXXXXXXXXXX\nPhone:XXXXXXXXX09\nEmail: XXXXXX@gmail.com\n')));
   }
 }

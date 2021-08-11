@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'login.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel',
@@ -37,16 +38,37 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Widget splashScreen = SplashScreenView(
+      navigateRoute: UserLogin(),
+      duration: 5000,
+      imageSize: 130,
+      imageSrc: "assets/images/flutter icon.png",
+      text: "Demo",
+      textType: TextType.ColorizeAnimationText,
+      textStyle: TextStyle(
+        fontSize: 40.0,
+      ),
+      colors: [
+        Colors.tealAccent,
+        Colors.blue,
+        Colors.cyan,
+      ],
+      backgroundColor: Colors.white,
+    );
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-        primaryColor: Colors.cyan,
-        primaryColorDark: Colors.tealAccent[900],
-        accentColor: Colors.tealAccent),
-        home: UserLogin());
+      title: 'Splash screen Demo',
+      home: splashScreen,
+      theme: ThemeData(
+          primaryColor: Colors.cyan,
+          primaryColorDark: Colors.tealAccent[900],
+          accentColor: Colors.tealAccent),
+    );
   }
 }
+

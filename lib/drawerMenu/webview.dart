@@ -19,7 +19,7 @@ class _HoblistPageState extends State<HoblistPage> {
   @override
   Widget build(BuildContext context) {
     return WebView(
-      initialUrl: "https://hoblist.com",
+      initialUrl: "https://pub.dev/",
     );
   }
 }

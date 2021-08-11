@@ -36,8 +36,7 @@ String? validateEmail(String value) {
     return null;
 }
 
-
-Widget inputBorderedTextFormField(String hintText, String emptyText,charText,
+Widget inputBorderedTextFormField(String hintText, String emptyText, charText,
     TextInputType keyboardType, TextEditingController controller,
     [int minLines = 1, int maxLines = 1]) {
   return TextFormField(
@@ -53,10 +52,10 @@ Widget inputBorderedTextFormField(String hintText, String emptyText,charText,
           borderSide: BorderSide(color: Colors.tealAccent, width: 1.0)),
     ),
     validator: (value) {
-      if (value!.isEmpty||value=="") {
+      if (value!.isEmpty || value == "") {
         return emptyText;
-      }else if(value.isNotEmpty&&value.length<2){
-return charText;
+      } else if (value.isNotEmpty && value.length < 2) {
+        return charText;
       }
       return null;
     },
@@ -66,28 +65,24 @@ return charText;
   );
 }
 
-Widget readOnlyBorderedTextFormField(
-    String? initialvalue, String labelText) {
+Widget readOnlyBorderedTextFormField(String? initialvalue, String labelText) {
   return TextFormField(
-    autocorrect: true,
-    readOnly: true,
-    initialValue: initialvalue,
-    style: TextStyle(fontSize: 18),
-    decoration: new InputDecoration(
+      autocorrect: true,
+      readOnly: true,
+      initialValue: initialvalue,
+      style: TextStyle(fontSize: 18),
+      decoration: new InputDecoration(
         isDense: true,
         labelText: labelText,
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.orangeAccent, width: 1.0),
+          borderSide: BorderSide(color: Colors.tealAccent, width: 1.0),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.orangeAccent, width: 1.0),
-        )),
-  );
+      ));
 }
 
-
 AppBar setAppBar(String title, BuildContext context) {
-  return AppBar(centerTitle: true,
+  return AppBar(
+    centerTitle: true,
     title: Text(title),
   );
 }

@@ -1,8 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:task/common.dart';
-import 'package:task/drawerMenu/Hoblist.dart';
+import 'package:task/drawerMenu/webview.dart';
 import 'package:task/drawerMenu/contact.dart';
+import 'package:task/drawerMenu/userprofile.dart';
 import 'package:task/login.dart';
 import 'package:task/main.dart';
 import 'LocalStore.dart';
@@ -96,8 +97,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: setAppBar("Task", context),
-      body: Image.asset("assets/images/task.png"),
+      appBar: setAppBar("Demo", context),
+      body: Image.asset("assets/images/flutter.png"),
       drawer: _drawer(context),
     );
   }
@@ -115,7 +116,7 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Expanded(
                     child: Center(
-                        child: Text("Task",
+                        child: Text("Demo",
                             style: TextStyle(
                                 fontFamily: 'Logofont',
                                 fontWeight: FontWeight.bold,
@@ -137,11 +138,19 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           ListTile(
-            title: Text('Hoblist'),
+            title: Text('WebView'),
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => HoblistPage()));
+            },
+          ),
+          ListTile(
+            title: Text('UsetProfile'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => UserProfile()));
             },
           ),
           TextButton(
